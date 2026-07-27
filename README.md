@@ -11,7 +11,7 @@ This project contains the basics of the programming language [Julia](https://jul
 - [Package and Environment Management](#package-and-environment-management)
 - [Basic Syntax](#basic-syntax)
 
-
+<br><br>
 
 ---
 ### Reasons to use Julia for Deep learning
@@ -25,7 +25,7 @@ While python was and still is the main language for many task, also for deep lea
 - easy syntax
 - and more
 
-
+<br><br>
 
 ---
 ### Installation
@@ -38,39 +38,78 @@ While python was and still is the main language for many task, also for deep lea
     ```
 3. Start Julia by typing "**julia**" in the terminal/bash. This will start the [REPL](#repl). Else you can open an IDE, like Visual Studio Code (using the Julia extension) or writing your code in plain text editors and running them from terminal with **julia your_file.jl**. Another way is to start a Jupyter Server and writting julia code in a ipynb file. Here you also can use Visual Studio Code or the [core Jupyter](https://jupyter.org/install) or [here](https://github.com/jupyterlab/jupyterlab-desktop) or [with IJulia](#interactive-julia-notebooks).
 
+<br>
 
+Installation of Env used here:
+1. Open Julia REPL
+2. Navigate to this project
+    ```julia
+    cd("F:/src/HelpJl")
+    pwd()
+    using Pkg
+    Pkg.activate(".")
+    Pkg.add(["DataFrames", "IJulia", "Flux", "MLJ", "CUDA", "cuDNN"])
+    Pkg.update()
+    Pkg.status()
+    ```
+    Alternativly you can use the already existing files if you use this project:
+    ```julia
+    cd("F:/src/HelpJl")
+    pwd()
+    using Pkg
+    Pkg.activate(".")
+    Pkg.instantiate()
+    Pkg.status()
+    ```
+
+<br><br>
 
 ---
 ### REPL
 
 The REPL (Read-Eval-Prit Loop) is a lightweight Julia console. There you run Julia commands line by line. It is perfect for installing packages, organize virtual environments and experiment/test.
 
+<br>
+
 To start the REPL, just open a terminal and type **julia**.
+
+<br>
 
 Importing packages:
 ```terminal
-using DataFrame
+using DataFrames
 df = DataFrame(A=1:7, B=rand(7))
 println(df)
 ```
 
+<br>
+
 Using **Package Mode** by pressing **]**.
+
+<br>
 
 Using **help mode** to print information about code like functions and classes. Just type **?** for the code:
 ```terminal
 ?println
 ```
 
+<br>
+
 Using **shell mode** to run an system call by using **;** before the statement.
 ```terminal
 ;ls
 ```
+
+> I do not recommend using the shell mode (at least under windows). Instead I recommend using the given os functions directly in julia → [see this notebook](./src/os.ipynb).
+
+<br>
 
 For profiling you also can use @time and @benchmark before the running code with one whitespace as seperator.
 ```terminal
 @time sum(1:10000)
 ```
 
+<br><br>
 
 ---
 ### Interactive Julia Notebooks
@@ -98,7 +137,7 @@ notebook()
 
 > Hint: You can use @time and @benchmark to profile and debug blocks/cells in your notebooks.
 
-
+<br><br>
 
 ---
 ### Package and Environment Management
@@ -108,48 +147,73 @@ Julia have comes with it's own packaging system called **Pkg.jl**. To open it, o
 add Flux
 ```
 
+<br>
+
 Multiple packages:
 ```terminal
 add Flux MLJ CUDA DataFrames
 ```
+
+<br>
 
 Specific Version:
 ```terminal
 add Flux@0.12.5
 ```
 
+<br>
+
 You can remove packages with:
 ```terminal
 rm Flux
 ```
+
+<br>
 
 Updating your packages automatically:
 ```terminal
 update
 ```
 
+<br>
+
 Show installed packages:
 ```terminal
 status
 ```
+
+<br><br>
 
 Next we have the **management** of different **environments**. For different projects you need different packages with maybe different versions. In Julia it is easy to activate and create an virtual environment. Open the terminal, navigate to your project folder, type julia and press ], then type:
 ```terminal
 activate .
 ```
 
+You can use the REPL to navigate to your target folder, I recommend using the julia mode not the shell mode via:
+```julia
+pwd()          # Show current directory
+readdir()      # List Files and Folders
+cd("C:/Users/YourName/Projects")   # Change your current directory
+# or
+cd(raw"C:\Users\YourName\Projects")
+``` 
+
+<br>
+
 A virtual environment is defined by the project.toml and the Manifest.toml.<br>Every package you install after the activate command will be added only at the virtual environment.
 
-
+<br><br>
 
 It is also possible to open the terminal, type julia and then importing the Pkg.jl package:
 ```terminal
 using Pkg
+Pkg.activate(".")
 Pkg.add("Flux")
 Pkg.rm("Flux")
 Pkg.update()
-Pkg.activate(".")
 ```
+
+<br><br>
 
 To install/copy an existing environment. Copy the **Project.toml** and **Manifest.toml** files to your new project and then open your terminal and navigate to your new project folder:
 ```terminal
@@ -159,9 +223,24 @@ Pkg.activate(".")
 Pkg.instantiate()
 ```
 
+<br><br>
+
+Checkout your env:
+```julia
+using Pkg
+
+Base.active_project()
+Pkg.status()
+Pkg.envdir()
+```
+
+<br><br>
 
 ---
 ### Basic Syntax
+
+
+
 
 
 
